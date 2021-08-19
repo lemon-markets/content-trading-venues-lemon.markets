@@ -24,7 +24,8 @@ In this repo, we are using the Sendgrid API to send emails. You need a Sendgrid 
 ## Environment Variables
 In order to be able to use the script, please set the following environment variables:
 - TOKEN_KEY = "Your lemon.markets Access Token"
-- BASE_URL = "The base URL of our Paper Money API"
+- BASE_URL_TRADING = "The base URL of our Paper Trading API"
+- BASE_URL_DATA = "The base URL of our Market Data API"
 - MIC = "Market Identifier Code of Trading Venue"
 - SPACE_UUID = "UUID of your space"
 - SENDGRID_API_KEY = "Your Sendgrid API Key"
