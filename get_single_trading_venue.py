@@ -7,8 +7,8 @@ class SingleTradingVenue(RequestHandler):
     def get_single_trading_venue(self):
         load_dotenv()
         mic = os.getenv("MIC")
-        endpoint = f'trading-venues/{mic}'
-        response = self.get_data(endpoint)
+        endpoint = f'venues/?mic={mic}'
+        response = self.get_data_data(endpoint)
         print(response)
 
 

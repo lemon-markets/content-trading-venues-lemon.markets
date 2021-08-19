@@ -1,7 +1,7 @@
 import os
 from dotenv import load_dotenv
 import json
-import time
+
 
 from helpers import RequestHandler, EmailSenderSendgrid
 
@@ -14,35 +14,20 @@ class TradingVenue(RequestHandler):
         """
         load_dotenv()
         mic = os.getenv("MIC")
-        endpoint = f'trading-venues/{mic}/opening-days/'
-        response = self.get_data(endpoint)
-        timestamp_close = response['results'][0].get('closing_time', None)
-        print(timestamp_close)
-        return timestamp_close
+        endpoint = f'venues/?mic={mic}'
+        response = self.get_data_data(endpoint)
+        closing_time = response['results'][0]['opening_hours'].get('end')
+        print(closing_time)
+        return closing_time
 
-    def get_portfolio(self):
-        """
-        helper function to get the space's portfolio
-        """
+    def send_out_email(self):
         load_dotenv()
         space_uuid = os.getenv("SPACE_UUID")
         endpoint = f'spaces/{space_uuid}/portfolio/'
-        response = self.get_data(endpoint)
+        response = self.get_data_trading(endpoint)
         email_text = json.dumps(response)
         subject = "Your Portfolio at market close"
         EmailSenderSendgrid(email_text, subject)
-
-    def send_out_close_email(self):
-        """
-        helper function to determine the time until market close
-        """
-        # get the current time
-        current_time = time.time()
-        # sleep until market close
-        print(f'Waiting for {(self.get_closing_time()-current_time)/60/60} hours')
-        time.sleep(self.get_closing_time()-current_time)
-        # get the portfolio at market close and send out email
-        self.get_portfolio()
 
     def check_if_open(self):
         """
@@ -51,9 +36,9 @@ class TradingVenue(RequestHandler):
         """
         load_dotenv()
         mic = os.getenv("MIC")
-        endpoint = f'trading-venues/{mic}'
-        response = self.get_data(endpoint)
-        is_open = response.get('is_open', 'It was not possible to retrieve the is_open attribute')
+        endpoint = f'venues/?mic={mic}'
+        response = self.get_data_data(endpoint)
+        is_open = response['results'][0].get('is_open', 'It was not possible to retrieve the is_open attribute')
         print(is_open)
         return is_open
 
@@ -95,7 +80,7 @@ class TradingVenue(RequestHandler):
             self.activate_order(order_uuid)
             print('order was activated')
             # additionally, we send an email with the portfolio items at market close
-            self.send_out_close_email()
+            self.send_out_email()
         # throw exception in case something goes wrong
         except Exception as e:
             print('placing order not possible', e)
