@@ -7,19 +7,7 @@ from helpers import RequestHandler, EmailSenderSendgrid
 
 
 class TradingVenue(RequestHandler):
-    def get_closing_time(self):
-        """
-        helper function to get next closing time
-        :return: {int} the timestamp close is returned
-        """
-        load_dotenv()
-        mic = os.getenv("MIC")
-        endpoint = f'venues/?mic={mic}'
-        response = self.get_data_data(endpoint)
-        closing_time = response['results'][0]['opening_hours'].get('end')
-        print(closing_time)
-        return closing_time
-
+    
     def send_out_email(self):
         load_dotenv()
         space_uuid = os.getenv("SPACE_UUID")
