@@ -3,6 +3,7 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import requests
+import json
 from dotenv import load_dotenv
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
@@ -20,9 +21,9 @@ class EmailSenderSendgrid:
             sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
             response = sg.send(message)
             print(response.status_code)
-            print('email successfully delivered')
+            print('Email successfully delivered')
         except Exception as e:
-            print(e.message)
+            print(e)
 
 
 class RequestHandler:
@@ -37,7 +38,7 @@ class RequestHandler:
         """
         response = requests.get(self.url_data + endpoint,
                                 headers={
-                                    "Authorization": "Bearer " + os.environ.get("TOKEN_KEY")
+                                    "Authorization": "Bearer " + os.environ.get("API_KEY")
                                 })
 
         return response.json()
@@ -49,7 +50,7 @@ class RequestHandler:
         """
         response = requests.get(self.url_trading + endpoint,
                                 headers={
-                                    "Authorization": "Bearer "+os.environ.get("TOKEN_KEY")
+                                    "Authorization": "Bearer "+os.environ.get("API_KEY")
                                 })
 
         return response.json()
@@ -57,14 +58,14 @@ class RequestHandler:
     def put_data(self, endpoint: str):
         response = requests.put(self.url_trading + endpoint,
                                 headers={
-                                    "Authorization": "Bearer " + os.environ.get("TOKEN_KEY")
+                                    "Authorization": "Bearer " + os.environ.get("API_KEY")
                                 })
         return response.json()
 
     def post_data(self, endpoint: str, data):
         response = requests.post(self.url_trading + endpoint,
-                                 data,
+                                 json.dumps(data),
                                  headers={
-                                     "Authorization": "Bearer " + os.environ.get("TOKEN_KEY")
+                                     "Authorization": "Bearer " + os.environ.get("API_KEY")
                                  })
         return response.json()

@@ -10,8 +10,7 @@ class TradingVenue(RequestHandler):
     
     def send_out_email(self):
         load_dotenv()
-        space_uuid = os.getenv("SPACE_UUID")
-        endpoint = f'spaces/{space_uuid}/portfolio/'
+        endpoint = f'portfolio/'
         response = self.get_data_trading(endpoint)
         email_text = json.dumps(response)
         subject = "Your Portfolio at market close"
@@ -30,15 +29,14 @@ class TradingVenue(RequestHandler):
         print(is_open)
         return is_open
 
-    def activate_order(self, order_uuid):
+    def activate_order(self, order_id):
         """
         helper function to activate the order once it was placed
-        :param order_uuid: the order UUID of the order that is to be activated
+        :param order_id: the order UUID of the order that is to be activated
         """
         load_dotenv()
-        space_uuid = os.getenv("SPACE_UUID")
-        endpoint = f'spaces/{space_uuid}/orders/{order_uuid}/activate/'
-        response = self.put_data(endpoint)
+        endpoint = f'orders/{order_id}/activate/'
+        response = self.post_data(endpoint, {})
         print(response)
 
     def place_order(self):
@@ -53,25 +51,30 @@ class TradingVenue(RequestHandler):
             return
 
         # send notification email if trading venue is closed
+
         try:
+            space_id = os.getenv("SPACE_ID")
+            mic = os.getenv("MIC")
+
             order_details = {
                 "isin": "DE0008232125",  # ISIN of Lufthansa
-                "valid_until": 2000000000,  # specify your timestamp
+                "expires_at": "p7d",  # specify your timestamp
                 "side": "buy",
                 "quantity": 1,
+                "venue": mic,
+                "space_id": space_id
             }
-            space_uuid = os.getenv("SPACE_UUID")
-            endpoint = f'spaces/{space_uuid}/orders/'
+            endpoint = f'orders/'
             response = self.post_data(endpoint, order_details)
-            order_uuid = response.get('uuid')
+            order_id = response['result'].get('id', 'We were not able to retrieve the order ID.')
             # access helper function to activate the order
-            self.activate_order(order_uuid)
-            print('order was activated')
+            self.activate_order(order_id)
+            print('Order was activated')
             # additionally, we send an email with the portfolio items at market close
             self.send_out_email()
         # throw exception in case something goes wrong
         except Exception as e:
-            print('placing order not possible', e)
+            print('Placing order not possible', e)
 
 
 if __name__ == "__main__":

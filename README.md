@@ -1,14 +1,14 @@
 # lemon.markets Trading Venues
 
-This is a a public lemon.markets repository that outlines a number of use cases for our trading venue endpoints. 
+This is a public [lemon.markets](https://lemon.markets) repository that outlines a number of use cases for our trading venue endpoints. If you're not yet part of lemon.markets, be sure to sign up for our [waitlist](https://www.lemon.markets/waitlist).
 
 ## What to do with it?
 
 We included a number of Python scripts that are supposed to help you get started with our trading venue endpoints. 
 You will have to make a few changes within the script to make them work. 
-- insert an access token at the sections marked with **"YOUR-TOKEN-HERE"**
-- specifiy your trading venue using the **Market Identifier Code (mic)** (we currently support the Munich Stock Exchange (**XMUN**) but watch out for additional ones in the future
-- include the proper URL in the requests. We are currently in closed beta, so we exchanged the correct URL with **secret-beta-url**. If you're already part of our closed beta: you will know the correct URL. If you are not yet part of our closed beta: make sure to sign up for our [waitlist](https://www.lemon.markets/waitlist)
+- insert an access token at the sections marked with **"YOUR-TOKEN-HERE"**;
+- specifiy your trading venue using the **Market Identifier Code (mic)** (we currently support the Munich Stock Exchange (**XMUN**) but watch out for additional ones in the future;
+- include the proper URL in the requests.
 
 ## What use cases are covered by this repo?
 The Python scripts deal with different endpoints concerned with the topic of trading venues. Specifically:
@@ -23,14 +23,14 @@ In this repo, we are using the Sendgrid API to send emails. You need a Sendgrid 
 
 ## Environment Variables
 In order to be able to use the script, please set the following environment variables:
-- TOKEN_KEY = "Your lemon.markets Access Token"
+- API_KEY = "Your lemon.markets API key"
 - BASE_URL_TRADING = "The base URL of our Paper Trading API"
 - BASE_URL_DATA = "The base URL of our Market Data API"
 - MIC = "Market Identifier Code of Trading Venue"
-- SPACE_UUID = "UUID of your space"
+- SPACE_ID = "ID of your space"
 - SENDGRID_API_KEY = "Your Sendgrid API Key"
 - EMAIL_FROM = "Email you want to send emails from"
-- EMAIL_TO="email you want to send emails to"
+- EMAIL_TO="Email you want to send emails to"
 
 ## Interested in contributing?
 
