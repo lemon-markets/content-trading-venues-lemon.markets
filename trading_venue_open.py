@@ -66,7 +66,7 @@ class TradingVenue(RequestHandler):
             }
             endpoint = f'orders/'
             response = self.post_data(endpoint, order_details)
-            order_id = response['result'].get('id', 'We were not able to retrieve the order ID.')
+            order_id = response['results'].get('id', 'We were not able to retrieve the order ID.')
             # access helper function to activate the order
             self.activate_order(order_id)
             print('Order was activated')
