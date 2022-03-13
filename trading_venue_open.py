@@ -53,7 +53,6 @@ class TradingVenue(RequestHandler):
         # send notification email if trading venue is closed
 
         try:
-            space_id = os.getenv("SPACE_ID")
             mic = os.getenv("MIC")
 
             order_details = {
@@ -62,7 +61,6 @@ class TradingVenue(RequestHandler):
                 "side": "buy",
                 "quantity": 1,
                 "venue": mic,
-                "space_id": space_id
             }
             endpoint = f'orders/'
             response = self.post_data(endpoint, order_details)

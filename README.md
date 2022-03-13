@@ -27,7 +27,6 @@ In order to be able to use the script, please set the following environment vari
 - BASE_URL_TRADING = "The base URL of our Paper Trading API"
 - BASE_URL_DATA = "The base URL of our Market Data API"
 - MIC = "Market Identifier Code of Trading Venue"
-- SPACE_ID = "ID of your space"
 - SENDGRID_API_KEY = "Your Sendgrid API Key"
 - EMAIL_FROM = "Email you want to send emails from"
 - EMAIL_TO="Email you want to send emails to"
