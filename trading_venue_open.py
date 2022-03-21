@@ -10,10 +10,10 @@ class TradingVenue(RequestHandler):
     
     def send_out_email(self):
         load_dotenv()
-        endpoint = f'portfolio/'
+        endpoint = f'positions/'
         response = self.get_data_trading(endpoint)
         email_text = json.dumps(response)
-        subject = "Your Portfolio at market close"
+        subject = "Your positions at market close"
         EmailSenderSendgrid(email_text, subject)
 
     def check_if_open(self):
@@ -32,7 +32,7 @@ class TradingVenue(RequestHandler):
     def activate_order(self, order_id):
         """
         helper function to activate the order once it was placed
-        :param order_id: the order UUID of the order that is to be activated
+        :param order_id: the order ID of the order that is to be activated
         """
         load_dotenv()
         endpoint = f'orders/{order_id}/activate/'
@@ -68,7 +68,7 @@ class TradingVenue(RequestHandler):
             # access helper function to activate the order
             self.activate_order(order_id)
             print('Order was activated')
-            # additionally, we send an email with the portfolio items at market close
+            # additionally, we send an email with the positions at market close
             self.send_out_email()
         # throw exception in case something goes wrong
         except Exception as e:
