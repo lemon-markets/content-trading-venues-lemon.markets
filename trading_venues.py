@@ -1,10 +1,20 @@
-from helpers import RequestHandler
+import os
+from lemon import api
+from dotenv import load_dotenv
 
 
-class TradingVenues(RequestHandler):
+class TradingVenues():
+
+    def __init__(self):
+        load_dotenv()
+        self.client = api.create(
+            market_data_api_token=os.getenv("DATA_API_KEY"),
+            trading_api_token=os.getenv("TRADING_API_KEY"),
+            env="paper"
+        )
+
     def get_all_trading_venues(self):
-        endpoint = 'venues/'
-        response = self.get_data_data(endpoint)
+        response = self.client.market_data.venues.get()
         print(response)
 
 
