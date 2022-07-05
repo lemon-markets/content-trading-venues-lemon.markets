@@ -45,9 +45,10 @@ class TradingVenue():
                 "quantity": 1,
                 "venue": mic,
             }
-            price = self.client.market_data.trades.get_latest(order_details.get("isin")).results[0].p
+            price = self.client.market_data.quotes.get_latest(order_details.get("isin")).results[0].b
             if order_details.get('quantity') * price < 50:
                 print(f"Order price is, €{price}, which is below minimum allowed of €50.")
+                return
 
             response = self.client.trading.orders.create(isin=order_details.get('isin'),
                                                          quantity=order_details.get('quantity'),
