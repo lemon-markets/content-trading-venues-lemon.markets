@@ -38,25 +38,23 @@ class TradingVenue():
         # send notification email if trading venue is closed
 
         try:
-            order_details = {
-                "isin": "DE0008232125",  # ISIN of Lufthansa
-                "expires_at": 7,  # specify your timestamp
-                "side": "buy",
-                "quantity": 1,
-                "venue": mic,
-            }
-            price = self.client.market_data.quotes.get_latest(order_details.get("isin")).results[0].b
-            if order_details.get('quantity') * price < 50:
+            isin = "DE0008232125"  # ISIN of Lufthansa
+            expires_at = 7  # specify your timestamp
+            side = "buy"
+            quantity = 1
+
+            price = self.client.market_data.quotes.get_latest(isin).results[0].b
+            if quantity * price < 50:
                 print(f"Order price is, €{price}, which is below minimum allowed of €50.")
                 return
 
-            response = self.client.trading.orders.create(isin=order_details.get('isin'),
-                                                         quantity=order_details.get('quantity'),
-                                                         side=order_details.get('side'),
-                                                         expires_at=order_details.get('expires_at'),
-                                                         venue=order_details.get('venue'))
+            response = self.client.trading.orders.create(isin=isin,
+                                                         quantity=quantity,
+                                                         side=side,
+                                                         expires_at=expires_at,
+                                                         venue=mic)
             order_id = response.results.id
-            activate = self.client.trading.orders.activate(order_id=order_id)
+            self.client.trading.orders.activate(order_id=order_id)
             print('Order was activated')
             # additionally, we send an email with the positions at market close
             self.send_out_email()
