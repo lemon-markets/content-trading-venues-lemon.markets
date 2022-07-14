@@ -1,3 +1,4 @@
-requests~=2.25.1
+requests~=2.27.0
 python-dotenv~=0.18.0
 sendgrid~=6.7.1
+lemon~=1.0.3

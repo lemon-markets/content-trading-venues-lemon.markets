@@ -1,6 +1,7 @@
 # lemon.markets Trading Venues
 
-This is a public [lemon.markets](https://lemon.markets) repository that outlines a number of use cases for our trading venue endpoints. If you're not yet part of lemon.markets, be sure to sign up for our [waitlist](https://www.lemon.markets/waitlist).
+This is a public [lemon.markets](https://lemon.markets) repository that outlines a number of use cases for our trading venue endpoints. 
+If you're not yet part of lemon.markets, be sure to sign up on our website.
 
 ## What to do with it?
 
@@ -19,21 +20,25 @@ The Python scripts deal with different endpoints concerned with the topic of tra
 - **trading_venue_open.py**: a small script that checks whether a trading venue is currently open. If it is, an order is placed. If it is not, the user receives an email notifying him:her that the market is closed. Additionally, the script sends an automatic email at market close notifying the user of his:her portfolio.
 
 ## Sending Emails
-In this repo, we are using the Sendgrid API to send emails. You need a Sendgrid API Key, which you can pass as an environment variable. If you do not have a Sendgrid Account, yet: sign up [here](https://sendgrid.com/)
+In this repo, we are using the Sendgrid API to send emails. You need a Sendgrid API Key, which you can pass as an 
+environment variable. If you do not have a Sendgrid Account, yet: sign up [here](https://sendgrid.com/)
 
 ## Environment Variables
-In order to be able to use the script, please set the following environment variables:
-- API_KEY = "Your lemon.markets API key"
-- BASE_URL_TRADING = "The base URL of our Paper Trading API"
-- BASE_URL_DATA = "The base URL of our Market Data API"
-- MIC = "Market Identifier Code of Trading Venue"
-- SENDGRID_API_KEY = "Your Sendgrid API Key"
-- EMAIL_FROM = "Email you want to send emails from"
-- EMAIL_TO="Email you want to send emails to"
+The script uses several environment variables, configure your .env file as follows:
+
+| ENV Variable      |               Explanation               |
+|-------------------|:---------------------------------------:|
+| DATA_API_KEY      |        Your market data API key         |
+| TRADING_API_KEY   |    Your paper/money trading API key     |
+| MIC               | Market Identifier Code of Trading Venue |
+ | EMAIL_FROM        |   Email you want to send emails from    |
+ | EMAIL_TO          |    Email you want to send emails to     |
+| SENDGRID_API_KEY  |          Your Sendgrid API Key          |
 
 ## Interested in contributing?
 
-This (and all lemon.markets open source projects) is work in progress. If you are interested in contributing to this repo, simply create a PR and/or contact us at [support@lemon.markets](mailto:support@lemon.markets). 
+This (and all lemon.markets open source projects) is work in progress. If you are interested in contributing to this repo, 
+simply create a PR and/or contact us at [support@lemon.markets](mailto:support@lemon.markets). 
 
 Looking forward to building lemon.markets with you 🍋
 
